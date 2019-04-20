@@ -21,3 +21,12 @@ def test_seralize_flat_type():
         object_hook=serialize_named_tuples.create_object_hook(FlatTuple),
     )
     assert type(loaded) == FlatTuple
+
+
+def test_seralize_nested_type():
+    nested_tuple_json = '{"name":"arnold","data":{"x":0,"y":1}'
+    loaded = json.loads(
+        nested_tuple_json,
+        object_hook=serialize_named_tuples.create_object_hook(NestedTuple),
+    )
+    assert type(loaded) == NestedTuple
