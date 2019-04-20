@@ -15,7 +15,7 @@ def unseralize_object(cls, value):
 def make_typed(
     named_tuple_cls: Type[NamedTuple_T], simple_dict: Json_Object
 ) -> Callable[[Json_Object], NamedTuple_T]:
-    """Return a Object hook to seralize the given named tuple class from JSON"""
+    """Make a typed named tuple from a dictionary"""
 
     created_object = dict()
     for key, value_cls in named_tuple_cls._field_types.items():
