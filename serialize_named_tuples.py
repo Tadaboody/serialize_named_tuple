@@ -1,10 +1,13 @@
-from typing import Dict, Type, NamedTuple, Any, Callable, TypeVar
+from typing import Dict, Type, NamedTuple, Any, Callable, TypeVar, Union
 
+T = TypeVar("T")
 NamedTuple_T = TypeVar("NamedTuple_T", bound=Type[NamedTuple])
 Json_Object = Dict[str, Any]
+Simple_Type = Union[int, bool, float, str, Json_Object]
 
 
-def unseralize_object(cls, value):
+def unseralize_object(cls: Type[T], value: Simple_Type) -> T:
+    """Convert a type native to json to a given class"""
     if isinstance(cls, type(NamedTuple)):
         return make_typed(cls, value)
     if isinstance(value, dict):
