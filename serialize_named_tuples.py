@@ -1,7 +1,7 @@
 from typing import Dict, Type, NamedTuple, Any, Callable, TypeVar
 
 NamedTuple_T = TypeVar("NamedTuple_T", bound=Type[NamedTuple])
-Json_Object = Dict[[str, Any]]
+Json_Object = Dict[str, Any]
 
 
 def create_object_hook(
