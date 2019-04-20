@@ -16,17 +16,18 @@ class NestedTuple(typing.NamedTuple):
 
 def test_seralize_flat_type():
     flat_tuple_json = '{"x":0,"y":1}'
-    loaded = json.loads(
-        flat_tuple_json,
-        object_hook=serialize_named_tuples.create_object_hook(FlatTuple),
-    )
-    assert type(loaded) == FlatTuple
+    loaded = json.loads(flat_tuple_json)
+    typed_loaded = serialize_named_tuples.make_typed(FlatTuple, loaded)
+    assert type(typed_loaded) == FlatTuple
+    assert type(typed_loaded.x) == int
+    assert type(typed_loaded.y) == int
 
 
 def test_seralize_nested_type():
-    nested_tuple_json = '{"name":"arnold","data":{"x":0,"y":1}'
-    loaded = json.loads(
-        nested_tuple_json,
-        object_hook=serialize_named_tuples.create_object_hook(NestedTuple),
-    )
-    assert type(loaded) == NestedTuple
+    nested_tuple_json = '{"name":"arnold","data":{"x":0,"y":1}}'
+    loaded = json.loads(nested_tuple_json)
+    typed_loaded = serialize_named_tuples.make_typed(NestedTuple, loaded)
+    assert type(typed_loaded) == NestedTuple
+    assert type(typed_loaded.name) == str
+    assert type(typed_loaded.data) == FlatTuple
+    assert type(typed_loaded.data.x) == int
